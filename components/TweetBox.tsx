@@ -68,8 +68,19 @@ const TweetBox = ({ setTweets }: Props) => {
 		setImageUrlBoxIsOpen(false);
 	};
 
+	const handleClick = () => {
+		if (!session) {
+			toast(
+				"You cannot use this feature without logging in, so please log in",
+				{
+					icon: "🙂",
+				}
+			);
+		}
+	};
+
 	return (
-		<div className="flex space-x-2 p-5">
+		<div className="flex space-x-2 p-5" onClick={handleClick}>
 			<img
 				className="w-14 h-14 object-cover rounded-full mt-4"
 				src={session?.user?.image || "https://links.papareact.com/gll"}

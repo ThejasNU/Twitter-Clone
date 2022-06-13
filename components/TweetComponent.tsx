@@ -29,7 +29,34 @@ function TweetComponent({ tweet }: Props) {
 
 	useEffect(() => {
 		refreshComments();
-	}, []);
+	}, [comments]);
+
+	const handleCommentClick = () => {
+		if (!session) {
+			toast(
+				"You cannot use this feature without logging in, so please log in",
+				{
+					icon: "🙂",
+				}
+			);
+		} else {
+			setCommentBoxVisible(!commentBoxVisible);
+		}
+	};
+	const handleLikeClick = () => {
+		if (!session) {
+			toast(
+				"You cannot use this feature without logging in, so please log in",
+				{
+					icon: "🙂",
+				}
+			);
+		} else {
+			toast("You liked the tweet", {
+				icon: "❤️",
+			});
+		}
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -98,9 +125,7 @@ function TweetComponent({ tweet }: Props) {
 
 			<div className="mt-5 flex justify-between">
 				<div
-					onClick={(e) =>
-						session && setCommentBoxVisible(!commentBoxVisible)
-					}
+					onClick={handleCommentClick}
 					className="flex cursor-pointer items-center space-x-3 text-gray-400"
 				>
 					<ChatAlt2Icon className="h-5 w-5" />
@@ -109,7 +134,10 @@ function TweetComponent({ tweet }: Props) {
 				<div className="flex cursor-pointer items-center space-x-3 text-gray-400">
 					<SwitchHorizontalIcon className="h-5 w-5" />
 				</div>
-				<div className="flex cursor-pointer items-center space-x-3 text-gray-400">
+				<div
+					onClick={handleLikeClick}
+					className="flex cursor-pointer items-center space-x-3 text-gray-400"
+				>
 					<HeartIcon className="h-5 w-5" />
 				</div>
 				<div className="flex cursor-pointer items-center space-x-3 text-gray-400">
